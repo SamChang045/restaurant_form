@@ -1,10 +1,26 @@
 class Admin::RestaurantsController < ApplicationController
 
+  #Before action region Start
+  #
+  #
+  #
+  #
   before_action :authenticate_user!
   before_action :authenticate_admin
   
-  before_action :set_restaurant, only: [:show, :edit]
+  before_action :set_restaurant, only: [:show, :edit, :update]
+  #
+  #
+  #
+  #
+  #Before action region End
 
+
+  #Function definition Start
+  #
+  #
+  #
+  #
   #由於是全部 (多筆) 餐廳資料，所以實例變數 ＠restaurants 使用複數。
   #用 Restaurant.all 撈出所有的餐廳資料並存入 @restaurants 這個實例變數。
   def index
@@ -38,6 +54,31 @@ class Admin::RestaurantsController < ApplicationController
     end
   end
 
+  #這裡的邏輯和 create action 很類似：
+  #如果資料庫修改成功，就導向該資料頁（show action），並顯示 flash message
+  #如果資料庫修改失敗，就重新呼叫 edit 樣板，並顯示警告提示
+
+  def update
+    if @restaurant.update(restaurant_params)
+      redirect_to admin_restaurant_path(@restaurant)
+      flash[:notice] = "restaurant was successfully updated"
+    else
+      render :edit
+      flash[:alert] = "restaurant was failed to update"
+    end
+  end
+  #
+  #
+  #
+  #
+  #Function definition End
+
+  
+  #Private definition Start
+  #
+  #
+  #
+  #
   private
 
   def restaurant_params
@@ -47,5 +88,10 @@ class Admin::RestaurantsController < ApplicationController
   def set_restaurant
     @restaurant = Restaurant.find(params[:id])
   end
+  #
+  #
+  #
+  #
+  #Private definition End
 
 end
