@@ -3,6 +3,7 @@ class Admin::RestaurantsController < ApplicationController
   before_action :authenticate_user!
   before_action :authenticate_admin
   
+  before_action :set_restaurant, only: [:show, :edit]
 
   #由於是全部 (多筆) 餐廳資料，所以實例變數 ＠restaurants 使用複數。
   #用 Restaurant.all 撈出所有的餐廳資料並存入 @restaurants 這個實例變數。
@@ -10,6 +11,12 @@ class Admin::RestaurantsController < ApplicationController
     @restaurants = Restaurant.all
   end
   
+  def show
+  end
+
+  def edit
+  end
+
   #你宣告了一個 new 方法，用 Restaurant.new 建立一個新的餐廳實例 ＠restaurant，然後將這個實例存入變數，這裡要新增的資料只有一筆，所以依慣例 ＠restaurant 使用單數。
   def new
     @restaurant = Restaurant.new
@@ -35,6 +42,10 @@ class Admin::RestaurantsController < ApplicationController
 
   def restaurant_params
     params.require(:restaurant).permit(:name, :opening_hours, :tel, :address, :description)
+  end
+
+  def set_restaurant
+    @restaurant = Restaurant.find(params[:id])
   end
 
 end
