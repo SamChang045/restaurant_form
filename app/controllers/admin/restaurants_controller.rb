@@ -10,4 +10,9 @@ class Admin::RestaurantsController < ApplicationController
     @restaurants = Restaurant.all
   end
   
+  #你宣告了一個 new 方法，用 Restaurant.new 建立一個新的餐廳實例 ＠restaurant，然後將這個實例存入變數，這裡要新增的資料只有一筆，所以依慣例 ＠restaurant 使用單數。
+  def new
+    @restaurant = Restaurant.new
+  end
+
 end
