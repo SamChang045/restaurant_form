@@ -23,8 +23,14 @@ class Admin::RestaurantsController < ApplicationController
   #
   #由於是全部 (多筆) 餐廳資料，所以實例變數 ＠restaurants 使用複數。
   #用 Restaurant.all 撈出所有的餐廳資料並存入 @restaurants 這個實例變數。
+  #def index
+  #  @restaurants = Restaurant.all
+  #end
+
+  #params[:page]
+  #在瀏覽器裡，網址後接了 ?page=2，? 為網址和參數的分隔符號。當使用者送出網址時，這串參數會以 {page: 2} 的形式送進後端，而你可以透過 params[:page] 取得 value：
   def index
-    @restaurants = Restaurant.all
+    @restaurants = Restaurant.page(params[:page]).per(10)
   end
   
   def show
