@@ -8,7 +8,7 @@ class Admin::RestaurantsController < ApplicationController
   before_action :authenticate_user!
   before_action :authenticate_admin
   
-  before_action :set_restaurant, only: [:show, :edit, :update]
+  before_action :set_restaurant, only:  [:show, :edit, :update, :destroy]
   #
   #
   #
@@ -67,13 +67,25 @@ class Admin::RestaurantsController < ApplicationController
       flash[:alert] = "restaurant was failed to update"
     end
   end
+
+  #根據 routes.rb 裡的設定，我們可以透過 http://localhost:3000/admin/restaurants/:id 連進 admin/restaurants#destroy，進入 destroy action 時，會執行其中的邏輯程序：
+  #網址中攜帶著 :id (實際執行時，會有一個真實的數字)，我們可以用 params 方法取出。
+  #因為有了這筆數字，我們可以呼叫 Restaurant.find - 會透過 Restaurant Model，呼叫 find 方法，去 restaurants table 裡，把特定一筆資料撈出來。
+  #將撈出的該筆資料存入 @restaurant。
+  #呼叫 destroy 方法，將該筆資料刪除。
+
+  def destroy
+    @restaurant.destroy
+    redirect_to admin_restaurants_path
+    flash[:alert] = "restaurant was deleted"
+  end
   #
   #
   #
   #
   #Function definition End
 
-  
+
   #Private definition Start
   #
   #
