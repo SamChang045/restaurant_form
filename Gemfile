@@ -66,4 +66,7 @@ gem 'kaminari'
 gem 'bootstrap-sass', '~> 3.3.7'
 gem 'sass-rails', '>= 3.2'
 
+# install gem 'jquery-rails' for bootstrap js
+# And make sure to add app/assets/javascripts/application.js with 2 settings ::
+# //= require jquery and //= require bootstrap-sprockets 
 gem 'jquery-rails'
