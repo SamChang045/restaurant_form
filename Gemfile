@@ -8,8 +8,6 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
@@ -70,3 +68,11 @@ gem 'sass-rails', '>= 3.2'
 # And make sure to add app/assets/javascripts/application.js with 2 settings ::
 # //= require jquery and //= require bootstrap-sprockets 
 gem 'jquery-rails'
+
+group :production do
+  gem 'pg'
+end
+
+group :development, :test do
+  gem 'sqlite3'
+end
