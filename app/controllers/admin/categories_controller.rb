@@ -6,6 +6,8 @@ class Admin::CategoriesController < ApplicationController
   #
   before_action :authenticate_user!
   before_action :authenticate_admin
+
+  before_action :set_restaurant, only:  [:update, :destroy]
   #
   #
   #
@@ -24,7 +26,7 @@ class Admin::CategoriesController < ApplicationController
   def index
     @categories = Category.all
     if params[:id]
-      @category = Category.find(params[:id])
+      set_category
     else
       @category = Category.new
     end
@@ -33,7 +35,6 @@ class Admin::CategoriesController < ApplicationController
   #我們需要使用 Strong parameter 來允許表單傳入資料，因此會另外建立一個 category_params 方法，並設定為私有方法。
   #儲存失敗時，由於要重新 render index 樣板，需要再額外傳入 index 需要的 @categories 實例變數。
   def create
-    @category = Category.new(category_params)
     if @category.save
       flash[:notice] = "category was successfully created"
       redirect_to admin_categories_path
@@ -48,7 +49,6 @@ class Admin::CategoriesController < ApplicationController
   #並留給使用者成功訊息；如果不成功，就重新 render index 樣板，並傳入 index 樣板需要的 @categories 變數，
   #使用者有重新輸入的機會。
   def update
-    @category = Category.find(params[:id])
     if @category.update(category_params)
       flash[:notice] = "category was successfully updated"
       redirect_to admin_categories_path
@@ -80,6 +80,10 @@ class Admin::CategoriesController < ApplicationController
 
   def category_params
     params.require(:category).permit(:name)
+  end
+
+  def set_category
+    @category = Category.find(params[:id])
   end
   #
   #
