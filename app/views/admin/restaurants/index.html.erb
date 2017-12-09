@@ -17,6 +17,7 @@
         <thead>
           <tr>
             <td><span style="font-weight:bold;">Number</span></td>
+            <td><span style="font-weight:bold;">Category</span></td>
             <td><span style="font-weight:bold;">User Name</span></td>
             <td><span style="font-weight:bold;">Settings</span></td>
           </tr>
@@ -27,6 +28,7 @@
           <% @restaurants.each do |restaurant| %>
           <tr>
             <th scope="row"><%= restaurant.id %></th>
+            <td>[<%= restaurant.category.name %>]</td>
             <td><%= restaurant.name %></td>
             <td>
 
