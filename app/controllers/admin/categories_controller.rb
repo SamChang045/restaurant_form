@@ -11,4 +11,19 @@ class Admin::CategoriesController < ApplicationController
   #
   #
   #Before action region End
+
+  #Function definition Start
+  #
+  #
+  #
+  #
+  def index
+    @categories = Category.all
+  end
+  #
+  #
+  #
+  #
+  #Function definition End
+  
 end
