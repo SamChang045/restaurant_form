@@ -57,6 +57,14 @@ class Admin::CategoriesController < ApplicationController
       render :index
     end
   end
+
+  #請注意，目前我們尚未重構程式碼，因此需要在 destroy action 開始前，先加入 @category = Category.find(params[:id])，找到特定的一筆 Category 資料。
+  def destroy
+    @category = Category.find(params[:id])
+    @category.destroy
+    flash[:alert] = "category was successfully deleted"
+    redirect_to admin_categories_path
+  end
   #
   #
   #
