@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :restaurants
+    resources :categories 
     #resourcess 會為你產生一組 URL Helper 和網址，並對應到不同的 Action。
     root "restaurants#index"
   end
