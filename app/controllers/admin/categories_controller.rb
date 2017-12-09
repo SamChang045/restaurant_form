@@ -4,7 +4,7 @@ class Admin::CategoriesController < Admin::BaseController
   #
   #
   #
-  before_action :set_restaurant, only:  [:update, :destroy]
+  before_action :set_category, only: [:update, :destroy]
   #
   #
   #
