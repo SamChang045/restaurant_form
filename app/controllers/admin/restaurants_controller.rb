@@ -1,11 +1,10 @@
-class Admin::RestaurantsController < ApplicationController
+class Admin::RestaurantsController < Admin::BaseController
 
   #Before action region Start
   #
   #
   #
   #
-  before_action :authenticate_admin
   before_action :set_restaurant, only:  [:show, :edit, :update, :destroy]
   #
   #

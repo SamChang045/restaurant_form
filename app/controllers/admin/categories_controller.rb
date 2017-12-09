@@ -1,10 +1,9 @@
-class Admin::CategoriesController < ApplicationController
+class Admin::CategoriesController < Admin::BaseController
   #Before action region Start
   #
   #
   #
   #
-  before_action :authenticate_admin
   before_action :set_restaurant, only:  [:update, :destroy]
   #
   #
