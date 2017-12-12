@@ -14,17 +14,4 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
-
-body {
-  background: {
-      image: asset_url("");
-  }
-}
-
-thead {
-  background-color:gray; 
-}
-
-table {
-  background-color:white;
-}
+@import "style";
