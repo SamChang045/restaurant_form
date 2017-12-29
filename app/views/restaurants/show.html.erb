@@ -1,5 +1,6 @@
 <div class="container">
   <div class="row">
+
     <div class="col-md-12">
       <h1><%= @restaurant.name %></h1>
       <p>[<%= @restaurant.category.name %>]</p>
@@ -16,6 +17,7 @@
         </ul>
       </div>
     </div>
+    
     <div class="col-md-8">
       <%= simple_format @restaurant.description %>
     </div>
@@ -29,14 +31,37 @@
 
 <div class="container">
   <div class="row">
-   <%= form_for [@restaurant, @comment] do |f| %>
-    <div class="form-group">
-      <%= f.text_area :content, placeholder: "留個言吧", class: "form-control" %>
+
+
+    <!-- 顯示與餐廳相關的評論 -->
+    <% @restaurant.comments.each do |comment| %>
+    <div>
+
+      <h4><%= comment.user.email.split('@').first %></h4>
+      <p><%= simple_format comment.content %></p>
+
+      <p class="text-muted">
+        <em><%= time_ago_in_words(comment.created_at) %> ago -</em>
+      </p>
+
     </div>
-    <div class="form-group">
-      <%= f.submit class: "btn btn-primary" %>
-      <%= f.button "Cancel", type: :reset, class: "btn btn-default" %>
-    </div>
-  <% end %>
+
+    <hr>
+
+    <% end %>
+
+    <!-- 新增評論的表單輸入框 -->
+    <%= form_for [@restaurant, @comment] do |f| %>
+
+      <div class="form-group">
+        <%= f.text_area :content, placeholder: "留個言吧", class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.submit class: "btn btn-primary" %>
+        <%= f.button "Cancel", type: :reset, class: "btn btn-default" %>
+      </div>
+
+    <% end %>
   </div>
 </div>
