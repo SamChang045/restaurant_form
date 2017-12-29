@@ -9,6 +9,7 @@ namespace :dev do
         tel: FFaker::PhoneNumber.short_phone_number,
         address: FFaker::Address.street_address,
         description: FFaker::Lorem.paragraph,
+        image: File.open(Rails.root.join("app/assets/images/#{rand(0..3)}.jpg")),
         category: Category.all.sample
       )
     end
