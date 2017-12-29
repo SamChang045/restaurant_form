@@ -17,7 +17,7 @@
         </ul>
       </div>
     </div>
-    
+
     <div class="col-md-8">
       <%= simple_format @restaurant.description %>
     </div>
@@ -43,6 +43,11 @@
       <p class="text-muted">
         <em><%= time_ago_in_words(comment.created_at) %> ago -</em>
       </p>
+
+      <!--在 View 裡利用 ERB 插入這段條件式，用意是控制「Delete」按鈕的顯示。-->
+      <% if current_user.admin? %>
+        <%= link_to "Delete", restaurant_comment_path(@restaurant, comment), method: :delete %>
+      <% end %>
 
     </div>
 

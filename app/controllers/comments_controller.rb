@@ -15,6 +15,18 @@ class CommentsController < ApplicationController
     redirect_to restaurant_path(@restaurant)
   end
 
+
+  def destroy
+    @restaurant = Restaurant.find(params[:restaurant_id])
+    @comment = Comment.find(params[:id])
+
+    #在執行 destroy 方法前，一樣先檢查是否 current_user.admin?，確認回傳 true，才會執行刪除資料的動作，反而則不會有任何事情發生。
+    if current_user.admin?
+      @comment.destroy
+      redirect_to restaurant_path(@restaurant)
+    end
+  end
+
   private
 
   def comment_params
