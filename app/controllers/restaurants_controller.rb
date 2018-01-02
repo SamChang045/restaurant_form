@@ -14,4 +14,10 @@ class RestaurantsController < ApplicationController
     @recent_comments = Comment.order(created_at: :desc).limit(10)
   end
 
+  # GET restaurants/dashboard
+   # 會去 render app/views/restuarants/dashboard.html.erb
+  def dashboard
+    @restaurant = Restaurant.find(params[:id])
+  end
+
 end
