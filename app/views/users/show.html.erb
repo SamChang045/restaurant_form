@@ -32,11 +32,11 @@
           <div class="panel panel-default">
 
             <div class="panel-heading">
-              <h3 class="panel-title"><strong><%= @commented_restaurants.count %></strong> 已評論餐廳</h3>
+              <h3 class="panel-title"><strong><%= @restaurants.count %></strong> 已評論餐廳</h3>
             </div>
 
             <div class="panel-body">
-              <% @commented_restaurants.each do |restaurant| %>
+              <% @restaurants.each do |restaurant| %>
               <%= link_to restaurant_path(restaurant) do %>
               <div class="my-restaurant">
                 <div>
