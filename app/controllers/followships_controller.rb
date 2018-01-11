@@ -1,7 +1,2 @@
-class FollowshipsController < ApplicationController
-
-  def index
-    @users = User.all
-  end
-
+class FollowshipsController < ApplicationControllerz
 end
