@@ -3,14 +3,7 @@
   <% @users.each do |user| %>
     <li>
       <%= user.name %>
-
-        <% if current_user.following?(user) %>
-          <!-- 會用 DELETE 動作導向 http://localhost:3000/followships/{user.id} -->
-          <%= link_to 'Unfollow', followship_path(user), method: :delete %>
-        <% else %>
-          <!-- 會用 POST 動作導向 http://localhost:3000/followships?following_id={user.id} -->
-          <%= link_to 'Follow', followships_path(following_id: user), method: :post %>
-        <% end %>
+      <%= render partial: "shared/follow", locals: {user: user} %>
 
     </li>
   <% end %>
