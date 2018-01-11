@@ -4,6 +4,7 @@
     <!-- 使用 Bootstrap components 的 Nav Tabs -->
     <!-- https://getbootstrap.com/docs/3.3/components/#nav-tabs -->
     <ul class="nav nav-tabs">
+    
       <li role="presentation">
         <%= link_to '首頁', root_path %>
       </li>
@@ -13,6 +14,10 @@
       <li role="presentation" class="active">
         <%= link_to 'TOP10人氣餐廳', ranking_restaurants_path %>
       </li>
+      <li role="presentation">
+        <%= link_to '美食達人', users_path %>
+      </li>
+
     </ul>
 
   </div>
