@@ -23,4 +23,8 @@ class FollowshipsController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
+  def following?(user)
+    self.followings.include?(user)
+  end
+
 end
