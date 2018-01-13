@@ -40,5 +40,9 @@ class User < ApplicationRecord
   def following?(user)
     self.followings.include?(user)
   end
+  
+  def RelationshipsConfirming?(user)
+    self.friendings.include?(user)
+  end
 
 end
