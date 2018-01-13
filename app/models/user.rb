@@ -10,7 +10,7 @@ class User < ApplicationRecord
   
   # 「使用者評論很多餐廳」的多對多關聯
   has_many :comments, dependent: :restrict_with_error
-  has_many :restaurants, through: :comments
+  has_many :commented_restaurants, through: :comments, source: :restaurant
 
   # 「使用者收藏很多餐廳」的多對多關聯
   has_many :favorites, dependent: :destroy
