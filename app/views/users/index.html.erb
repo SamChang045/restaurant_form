@@ -36,12 +36,12 @@
           <%= image_tag(user.avatar, class: "img-rounded") %>
           <h4><%= user.name %></h4>
 
-          <!-- 會用 POST 動作導向 http://localhost:3000/friendships?friending_id={user.id} -->
-          <%= link_to 'Friend', friendships_path(following_id: user), method: :post %>
-
         <% end %>
 
         <%= render partial: "shared/follow", locals: {user: user} %>
+
+        <!-- 會用 POST 動作導向 http://localhost:3000/friendships?friending_id={user.id} -->
+        <%= link_to 'Friend', friendships_path(friending_id: user), method: :post %>
 
       </div>
     <% end %>
