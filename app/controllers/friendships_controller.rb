@@ -22,6 +22,7 @@ class FriendshipsController < ApplicationController
     @friendship = current_user.friendships.build(friend_id: params[:friend_id], status: "applying")
 
     if @friendship.save
+      @friendship.update(status: "applying")
     else
       flash[:alert] = @friendship.errors.full_messages.to_sentence
     end
