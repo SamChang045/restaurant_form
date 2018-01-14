@@ -1,5 +1,13 @@
 class FriendshipsController < ApplicationController
 
+  def index
+    @friendships = current_user.friendships
+  end
+
+  def update
+
+  end
+
   def create
     # 需要設定前端的 link_to，在發出請求時送進 friending_id
     @friendship = current_user.friendships.build(friending_id: params[:friending_id])
