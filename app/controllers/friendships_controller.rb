@@ -1,33 +1,48 @@
 class FriendshipsController < ApplicationController
 
   def index
-    @friendships = current_user.friendships
+    @applyers = current_user.applyers
+    @friends = current_user.friends + current_user.applyer_friends
   end
 
   def update
+    @friendship = Friendship.where(friend_id: current_user.id ,user_id: params[:id], status: "applying").first
+    @user = User.find(params[:id])
 
+    if @friendship.update(status: "friend")
+      flash[:notice] = "Successfully added #{@user.name} in friend list"
+    else
+      flash[:alert] = "Fail to add friend"
+    end
+
+    redirect_to friendships_path
   end
 
   def create
-    # 需要設定前端的 link_to，在發出請求時送進 friending_id
-    @friendship = current_user.friendships.build(friending_id: params[:friending_id])
+    @friendship = current_user.friendships.build(friend_id: params[:friend_id], status: "applying")
 
     if @friendship.save
-      flash[:notice] = "Congratulations! you both are friends"
-      redirect_back(fallback_location: root_path)
     else
-      # 驗證失敗時，Model 將錯誤訊息放在 errors 裡回傳
-      # 使用 errors.full_messages 取出完成訊息集合(Array)，串接 to_sentence 將 Array 組合成 String
-      flash[:alert] = "Sorry! the friendship had been taken."
-      redirect_back(fallback_location: root_path)
+      flash[:alert] = @friendship.errors.full_messages.to_sentence
     end
+
+    redirect_back(fallback_location: user_path(current_user))
   end
 
+
   def destroy
-    @friendship = current_user.friendships.where(friending_id: params[:id]).first
-    @friendship.destroy
-    flash[:alert] = "Friendship destroyed"
-    redirect_back(fallback_location: root_path)
+
+    if current_user.inverse_friendships.where(user_id: params[:id]).present?
+      @friendship = current_user.inverse_friendships.where(user_id: params[:id])
+      @friendship.destroy_all
+      @user = User.find(params[:id])
+      flash[:notice] = "Successfully deleted #{@user.name} from friend list"
+    elsif current_user.friendships.where(friend_id: params[:id]).present?
+      @friendship = current_user.friendships.where(friend_id: params[:id])
+      @friendship.destroy_all
+    end
+
+    redirect_back(fallback_location: friendships_path)
   end
 
 end

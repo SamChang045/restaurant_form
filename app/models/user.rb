@@ -32,13 +32,15 @@ class User < ApplicationRecord
 
 
   # 「使用者追蹤的朋友」的 self-referential relationships 設定
-  # 不需要另加 source，Rails 可從 Friendship Model 設定來判斷 friendings 指向 User Model 
+  # 不需要另加 source，Rails 可從 Friendship Model 設定來判斷 friends 指向 User Model 
   has_many :friendships, dependent: :destroy
-  has_many :friendings, through: :friendships
+  #-has_many :friend_id, through: :friendships
+  has_many :friends, -> { where(friendships: {status: "friend" } )}, through: :friendships
+  has_many :send_applys, -> { where(friendships: {status: "applying" } )}, through: :friendships, source: :friend
 
   # 「使用者的朋友」的設定
   # 透過 class_name, foreign_key 的自訂，指向 Friendship 表上的另一側
-  has_many :inverse_friendships, class_name: "Friendship", foreign_key: "friending_id"
+  has_many :inverse_friendships, class_name: "Friendship", foreign_key: "friend_id"
   has_many :applyers, -> { where(friendships: {status: "applying" } )}, through: :inverse_friendships, source: :user
   has_many :applyer_friends, -> { where(friendships: {status: "friend" } )}, through: :inverse_friendships, source: :user
 
@@ -50,8 +52,29 @@ class User < ApplicationRecord
     self.followings.include?(user)
   end
   
-  def RelationshipsConfirming?(user)
-    self.friendings.include?(user)
+  def is_friend?(user)
+    if self.friends.include?(user) or self.applyer_friends.include?(user)  
+        return true
+    else
+        return false
+    end
+  end
+
+
+  def is_be_applying?(user)
+    if self.applyers.include?(user) 
+      return true
+    else
+      return false
+    end
+  end
+
+  def is_applying?(user)
+    if self.send_applys.include?(user) 
+      return true
+    else
+      return false
+    end
   end
 
 end

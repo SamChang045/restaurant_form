@@ -1,23 +1,63 @@
-<div class="container">
+<% if flash[:notice] %>
   <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-
-      <!-- page-header 裡面顯示個人檔案資料 -->
-      <div class="page-header">
-
-        <div class="col-md-3 col-sm-4">
-          <div class="text-center">
-
-          </div>
-        </div>
-
-        <div class="col-md-9 col-sm-8">
-
-        </div>
-        <div class="clearfix"></div>
-
+    <div class="col-md-2"></div>
+    <div class="notice alert alert-success col-md-8" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+      <%= flash[:notice] %>  
+    </div>
+  </div>
+<% end %>
+<% if flash[:alert] %>
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="alert alert-danger col-md-8" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+      <%= flash[:alert] %>    
+    </div>
+  </div>
+<% end %>
+<div class="row" style="margin-top: 20px;">
+  <div class="col-md-6">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h5 class="panal-title"><%= @applyers.size %> 則好友申請</h5>
       </div>
+      <ul class="list-group">
+        <% @applyers.each do |friend| %>          
+          <li class="list-group-item">
+            <%= link_to user_path(friend) do %> 
+                <%= image_tag(friend.avatar, width: 60, height: 60, class: "img-circle") %>
+                <span class="user-name"><%= friend.name%></span>
+                <span class="friend-delete-btn">
+                   <%= link_to '', friendship_path(friend), method: :delete, data: { confirm: "Are you sure to delete?"}, class: "btn btn-danger glyphicon glyphicon-remove pull-right"%> 
+                </span>
+                <span class="friend-ok-btn">
+                  <%= link_to '', friendship_path(friend), method: :patch, class: "btn btn-success glyphicon glyphicon-ok pull-right" %>
+                </span>
 
+            <% end %>
+          </li>      
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-info">
+      <div class="panel-heading"><h5>朋友列表</h5></div>
+        <ul class="list-group">
+        <% @friends.each do |friend| %>
+          <li class="list-group-item">
+          <%= link_to user_path(friend) do %>    
+              <%= image_tag(friend.avatar, width: 60, height: 60, class: "img-circle") %>
+              <span class="user-name"><%= friend.name%></span>
+              <span class="friend-delete-btn">
+                <%= link_to '', friendship_path(friend), method: :delete, data: { confirm: "Are you sure to delete?"}, class: "btn btn-danger glyphicon glyphicon-remove pull-right"%>   
+              </span> 
+          <% end %>
+          </li>
+        <% end %>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
